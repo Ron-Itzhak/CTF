@@ -1,0 +1,82 @@
+<html>
+	<head> </head>
+	<body>
+		<div align="center">
+			<h1
+				style="
+					color: #1194ff;
+					font-size: 48px;
+					font-family: 'Signika', sans-serif;
+					padding-bottom: 10px;
+				"
+			>
+				Ron CTF challenge 1
+			</h1>
+			<h2
+				style="
+					color: #ffdb11;
+					font-size: 40px;
+					font-family: 'Signika', sans-serif;
+					padding-bottom: 10px;
+				"
+			>
+			OSINT
+			</h2>
+			<p style="
+			font-size: 15px;
+			font-family: 'Signika', sans-serif;
+			padding-bottom: 10px;
+		">Hint: This is the home stadium of the team <br>where The top scorer of the league for a single season played for,</br> what was his Original player song  ? </p>
+			
+				<img
+					id="fetchctf"
+					src="http://localhost:3000/Challenge1/stadium.jpg"
+					alt="CTF"
+					width="800"
+					height="600"
+			/>
+
+			<div
+				style="
+					color: #1194ff;
+					font-size: 55px;
+					font-family: 'Signika', sans-serif;
+					padding-bottom: 10px;
+				"
+				id="result"
+			></div>
+			<input type="text" id="flag" placeholder="enter flag here" />
+
+			<button id="enterflag">Check flag</button>
+		</div>
+		<script>
+			const sendflgBtn = document.querySelector("#enterflag");
+			const result = document.querySelector("#result");
+			window.onload = function () {
+				result.innerText = "";
+			};
+			// gets data from API and sets the content of #result div
+			
+
+			const sendFlag = function () {
+				result.innerText = "sending flag..";
+				var flag = document.getElementById("flag").value;
+				//console.log("html test" + flag);
+				//result.innerText = flag;
+				let info = { flag };
+				var requestOptions = {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify(info),
+				};
+
+				fetch("http://localhost:3000/sendflag", requestOptions)
+					.then((response) => response.text())
+					.then((data) => (result.innerText = JSON.stringify(data, null, 2)))
+					.catch((error) => console.log("error", error));
+			};
+
+			sendflgBtn.addEventListener("click", sendFlag);
+		</script>
+	</body>
+</html>
